@@ -1,6 +1,6 @@
 import { prisma } from '../lib/prisma';
 import { AppError } from '../middlewares/error.middleware';
-import { verifyToken } from '../utils/jwt';
+import { verifyToken, signToken } from '../utils/jwt';
 import { randomUUID } from 'crypto';
 
 export class TicketService {
@@ -36,8 +36,6 @@ export class TicketService {
 
             // 3. Generate Secure Code
             const ticketId = randomUUID();
-            // Generate a signed JWT containing the ticketId. This complies with the validation logic.
-            const secureCode = signToken({ ticketId });
 
             // 4. Create Ticket & Decrement Counter
             const ticket = await tx.ticket.create({
@@ -45,7 +43,7 @@ export class TicketService {
                     id: ticketId,
                     userId,
                     eventId,
-                    code: secureCode, // Store the signed JWT
+                    code: signToken({ ticketId, userId, eventId }), // Generate JWT with ticket info
                 },
             });
 
@@ -103,14 +101,14 @@ export class TicketService {
                 throw new AppError('Ticket not found', 404);
             }
 
-            if (ticket.checkedIn) {
+            if (ticket.checkedInAt) {
                 throw new AppError('Ticket already checked in', 400);
             }
 
             // Mark ticket as checked in
             await tx.ticket.update({
                 where: { id: ticketId },
-                data: { checkedIn: true, checkInTime: new Date() },
+                data: { checkedInAt: new Date() },
             });
 
             return {
@@ -119,8 +117,7 @@ export class TicketService {
                     id: ticket.id,
                     eventId: ticket.eventId,
                     userId: ticket.userId,
-                    checkedIn: true,
-                    checkInTime: new Date(),
+                    checkedInAt: new Date(),
                     event: {
                         name: ticket.event.name,
                         date: ticket.event.date,
