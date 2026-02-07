@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { api } from '../services/api';
 import { jwtDecode } from "jwt-decode";
@@ -12,6 +12,76 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
     const [manualCode, setManualCode] = useState('');
     const [scannedEventTitle, setScannedEventTitle] = useState<string | null>(null);
     const isProcessing = useRef(false);
+    const streamRef = useRef<MediaStream | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Effect to capture the video stream from the DOM
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+
+        const findVideoStream = () => {
+            if (!containerRef.current) return;
+
+            // Search specifically within our component
+            const video = containerRef.current.querySelector('video');
+            if (video) {
+                console.log("QRScanner: Video element found", video);
+                if (video.srcObject) {
+                    console.log("QRScanner: Stream captured from srcObject");
+                    streamRef.current = video.srcObject as MediaStream;
+                    clearInterval(intervalId);
+                }
+            }
+        };
+
+        // Check frequently (100ms)
+        intervalId = setInterval(findVideoStream, 100);
+
+        return () => {
+            console.log("QRScanner: Unmounting, running cleanup...");
+            clearInterval(intervalId);
+            cleanupCamera();
+        };
+    }, []);
+
+    const cleanupCamera = () => {
+        let stoppedCount = 0;
+
+        // 1. Stop captured stream
+        if (streamRef.current) {
+            const tracks = streamRef.current.getTracks();
+            console.log(`QRScanner: Stopping ${tracks.length} tracks from captured stream`);
+            tracks.forEach(track => {
+                track.stop();
+                track.enabled = false;
+                stoppedCount++;
+            });
+            streamRef.current = null;
+        }
+
+        // 2. Aggressive fallback: Check all video elements in the document
+        // This is necessary because react-qr-reader might move the node or we missed the capturing window
+        document.querySelectorAll('video').forEach((video, index) => {
+            if (video.srcObject) {
+                const stream = video.srcObject as MediaStream;
+                const tracks = stream.getTracks();
+                if (tracks.length > 0 && tracks[0].readyState === 'live') {
+                    console.log(`QRScanner: Force stopping tracks on video element #${index}`);
+                    tracks.forEach(track => {
+                        track.stop();
+                        track.enabled = false;
+                        stoppedCount++;
+                    });
+                }
+            }
+        });
+
+        console.log(`QRScanner: Cleanup finished. Total tracks stopped: ${stoppedCount}`);
+
+        // Note: react-qr-reader has a known issue where it doesn't clean up properly on unmount.
+        // If this log appears but camera stays on, the library might be holding a reference internally
+        // that is detached from the DOM video element.
+    };
 
     const handleScan = async (result: any, error: any) => {
         const goAhead = (!!result && !error)
@@ -65,6 +135,12 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
         await handleScan(manualCode, null);
     };
 
+    const handleClose = () => {
+        console.log("QRScanner: Close requested");
+        cleanupCamera();
+        onClose();
+    };
+
     const bgColor = {
         idle: 'bg-black',
         success: 'bg-emerald-600',
@@ -73,8 +149,8 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
     }[scanResult.status] || 'bg-black';
 
     return (
-        <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center ${bgColor} transition-colors duration-500`}>
-            <button onClick={onClose} className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full z-10">
+        <div ref={containerRef} className={`fixed inset-0 z-50 flex flex-col items-center justify-center ${bgColor} transition-colors duration-500`}>
+            <button onClick={handleClose} className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full z-10">
                 ✕ Fechar
             </button>
 
