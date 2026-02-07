@@ -51,7 +51,7 @@ export class TicketService {
                     id: ticketId,
                     userId,
                     eventId,
-                    code: signToken({ ticketId, userId, eventId }), // Generate JWT with ticket info
+                    code: signToken({ ticketId, userId, eventId, eventTitle: event.title }), // Generate JWT with ticket info
                 },
                 include: {
                     user: true,

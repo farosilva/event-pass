@@ -5,6 +5,7 @@ const SECRET = process.env.JWT_SECRET || 'secret';
 export interface TokenPayload {
     userId: string;
     role: string;
+    eventTitle?: string;
 }
 
 export const signToken = (payload: object, expiresIn: string | number = '7d'): string => {

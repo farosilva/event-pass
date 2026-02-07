@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { api } from '../services/api';
+import { jwtDecode } from "jwt-decode";
 
 interface QRScannerProps {
     onClose: () => void;
@@ -9,6 +10,7 @@ interface QRScannerProps {
 export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
     const [scanResult, setScanResult] = useState<{ status: 'idle' | 'success' | 'error' | 'loading'; message?: string; data?: any }>({ status: 'idle' });
     const [manualCode, setManualCode] = useState('');
+    const [scannedEventTitle, setScannedEventTitle] = useState<string | null>(null);
     const isProcessing = useRef(false);
 
     const handleScan = async (result: any, error: any) => {
@@ -19,8 +21,20 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
 
         setScanResult({ status: 'loading' });
         isProcessing.current = true;
+        setScannedEventTitle(null); // Reset title
 
         const token = result?.text as string || result as string;
+
+        // Try to decode JWT to get event title immediately
+        try {
+            const decoded: any = jwtDecode(token);
+            if (decoded?.eventTitle) {
+                setScannedEventTitle(decoded.eventTitle);
+            }
+        } catch (e) {
+            // Ignore decoding errors, might be a legacy code or invalid
+            console.log("Could not decode QR token for preview", e);
+        }
 
         try {
             const { data } = await api.post('/tickets/validate', { token });
@@ -37,6 +51,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
         } finally {
             setTimeout(() => {
                 setScanResult({ status: 'idle' });
+                setScannedEventTitle(null);
                 isProcessing.current = false;
             }, 2000);
         }
@@ -77,8 +92,14 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
 
                 {/* Spinner on status loading */}
                 {scanResult.status === 'loading' && (
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-4">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+                        {scannedEventTitle && (
+                            <div className="text-center px-4 animate-pulse">
+                                <p className="text-sm opacity-80">Validando ingresso para:</p>
+                                <p className="text-xl font-bold">{scannedEventTitle}</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
@@ -91,8 +112,9 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
                 {scanResult.status === 'success' && (
                     <div className="space-y-2">
                         <h2 className="text-4xl font-bold mb-2">✅ APROVADO</h2>
-                        <p className="text-xl">Usuário: {scanResult.data?.user?.email}</p>
-                        <p>Evento: {scanResult.data?.event?.title}</p>
+                        <p className="text-xl">Usuário: {scanResult.data?.user?.name}</p>
+                        <p className="text-xl">Email: {scanResult.data?.user?.email}</p>
+                        <p>Evento: {scanResult.data?.event?.name}</p>
                     </div>
                 )}
                 {scanResult.status === 'error' && (
