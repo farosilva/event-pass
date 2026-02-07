@@ -88,8 +88,8 @@ export const EventList = () => {
     return (
         <div className="space-y-8 min-h-screen">
             {/* Header & Creative Search */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-indigo-500 animate-pulse">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-6">
+                <h1 className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-indigo-500 animate-pulse">
                     Próximos Eventos
                 </h1>
 
@@ -163,8 +163,8 @@ export const EventList = () => {
                                                         onClick={() => handleBuy(event.id)}
                                                         disabled={event.availableTickets === 0}
                                                         className={`w-full py-3 rounded-xl font-medium transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 ${event.availableTickets === 0
-                                                                ? 'bg-gray-700/50 text-gray-500 cursor-not-allowed border border-transparent'
-                                                                : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 border border-emerald-400/20'
+                                                            ? 'bg-gray-700/50 text-gray-500 cursor-not-allowed border border-transparent'
+                                                            : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 border border-emerald-400/20'
                                                             }`}
                                                     >
                                                         {event.availableTickets === 0 ? (

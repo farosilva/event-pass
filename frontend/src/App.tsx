@@ -39,7 +39,7 @@ function App() {
                             </Route>
                         </Route>
                     </Routes>
-                    <ToastContainer theme="dark" />
+                    <ToastContainer theme="dark" position='bottom-right' />
                 </div>
             </Router>
         </AuthProvider>
