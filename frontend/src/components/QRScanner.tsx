@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { api } from '../services/api';
 
@@ -7,50 +7,46 @@ interface QRScannerProps {
 }
 
 export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
-    const [scanResult, setScanResult] = useState<{ status: 'idle' | 'success' | 'error'; message?: string; data?: any }>({ status: 'idle' });
-    const isProcessing = React.useRef(false);
+    const [scanResult, setScanResult] = useState<{ status: 'idle' | 'success' | 'error' | 'loading'; message?: string; data?: any }>({ status: 'idle' });
+    const [manualCode, setManualCode] = useState('');
+    const isProcessing = useRef(false);
 
-    const handleScan = async (result: any, _error: any) => {
-        if (isProcessing.current) return;
+    const handleScan = async (result: any, error: any) => {
+        const goAhead = (!!result && !error)
+        const qrcodeIsInProcess = isProcessing?.current
 
-        if (result) {
-            isProcessing.current = true;
-            const token = result?.text || result;
+        if (qrcodeIsInProcess || !goAhead) return;
 
-            try {
-                const { data } = await api.post('/tickets/validate', { token });
-                setScanResult({
-                    status: 'success',
-                    message: 'Ingresso Válido',
-                    data: data.ticket
-                });
+        setScanResult({ status: 'loading' });
+        isProcessing.current = true;
 
-                // Auto reset after 2 seconds
-                setTimeout(() => {
-                    setScanResult({ status: 'idle' });
-                    isProcessing.current = false;
-                }, 2000);
+        const token = result?.text as string || result as string;
 
-            } catch (err: any) {
-                setScanResult({
-                    status: 'error',
-                    message: err.response?.data?.message || 'Ingresso Inválido'
-                });
-
-                // Auto reset after 2 seconds
-                setTimeout(() => {
-                    setScanResult({ status: 'idle' });
-                    isProcessing.current = false;
-                }, 2000);
-            }
+        try {
+            const { data } = await api.post('/tickets/validate', { token });
+            setScanResult({
+                status: 'success',
+                message: 'Ingresso Válido',
+                data: data.ticket
+            });
+        } catch (err: any) {
+            setScanResult({
+                status: 'error',
+                message: err.response?.data?.message || 'Ingresso Inválido'
+            });
+        } finally {
+            setTimeout(() => {
+                setScanResult({ status: 'idle' });
+                isProcessing.current = false;
+            }, 2000);
         }
     };
 
-    const [manualCode, setManualCode] = useState('');
-
     const handleManualSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!manualCode.trim() || isProcessing.current) return;
+        const qrcodeIsInProcess = isProcessing?.current
+
+        if (!manualCode.trim() || qrcodeIsInProcess) return;
         await handleScan(manualCode, null);
     };
 
@@ -58,6 +54,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
         idle: 'bg-black',
         success: 'bg-emerald-600',
         error: 'bg-rose-600',
+        loading: 'bg-yellow-600',
     }[scanResult.status] || 'bg-black';
 
     return (
@@ -67,16 +64,21 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
             </button>
 
             <div className="w-full max-w-sm aspect-square relative mb-6">
-                {scanResult.status === 'idle' && (
-                    <div className="border-4 border-white/30 rounded-lg overflow-hidden relative h-full">
-                        <QrReader
-                            onResult={handleScan}
-                            constraints={{ facingMode: 'environment' }}
-                            className="w-full h-full"
-                            containerStyle={{ width: '100%', height: '100%', paddingTop: 0 }}
-                            videoStyle={{ objectFit: 'cover' }}
-                        />
-                        <div className="absolute inset-0 border-2 border-primary animate-pulse opacity-50 pointer-events-none"></div>
+                <div style={{ visibility: scanResult.status === 'idle' ? 'visible' : 'hidden' }} className="border-4 border-white/30 rounded-lg overflow-hidden relative h-full">
+                    <QrReader
+                        onResult={handleScan}
+                        constraints={{ facingMode: 'environment' }}
+                        className="w-full h-full"
+                        containerStyle={{ width: '100%', height: '100%', paddingTop: 0 }}
+                        videoStyle={{ objectFit: 'cover' }}
+                    />
+                    <div className="absolute inset-0 border-2 border-primary animate-pulse opacity-50 pointer-events-none"></div>
+                </div>
+
+                {/* Spinner on status loading */}
+                {scanResult.status === 'loading' && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
                     </div>
                 )}
             </div>
