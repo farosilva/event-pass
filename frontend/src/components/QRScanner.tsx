@@ -8,14 +8,14 @@ interface QRScannerProps {
 
 export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
     const [scanResult, setScanResult] = useState<{ status: 'idle' | 'success' | 'error'; message?: string; data?: any }>({ status: 'idle' });
-    const [scanning, setScanning] = useState(true);
+    const isProcessing = React.useRef(false);
 
     const handleScan = async (result: any, _error: any) => {
-        if (!scanning) return;
+        if (isProcessing.current) return;
 
         if (result) {
-            setScanning(false);
-            const token = result?.text || result; // react-qr-reader versions differ, checking both
+            isProcessing.current = true;
+            const token = result?.text || result;
 
             try {
                 const { data } = await api.post('/tickets/validate', { token });
@@ -25,11 +25,11 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
                     data: data.ticket
                 });
 
-                // Auto reset after 3 seconds for next scan
+                // Auto reset after 2 seconds
                 setTimeout(() => {
                     setScanResult({ status: 'idle' });
-                    setScanning(true);
-                }, 3000);
+                    isProcessing.current = false;
+                }, 2000);
 
             } catch (err: any) {
                 setScanResult({
@@ -37,11 +37,11 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
                     message: err.response?.data?.message || 'Ingresso Inválido'
                 });
 
-                // Auto reset after 3 seconds
+                // Auto reset after 2 seconds
                 setTimeout(() => {
                     setScanResult({ status: 'idle' });
-                    setScanning(true);
-                }, 3000);
+                    isProcessing.current = false;
+                }, 2000);
             }
         }
     };
@@ -50,7 +50,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
 
     const handleManualSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!manualCode.trim()) return;
+        if (!manualCode.trim() || isProcessing.current) return;
         await handleScan(manualCode, null);
     };
 
