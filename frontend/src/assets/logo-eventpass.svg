@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" fill="none">
+  <defs>
+    <filter id="violet-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur5"/>
+      <feFlood flood-color="#8b5cf6" opacity="0.6" result="floodViolet"/>
+      <feComposite in="floodViolet" in2="blur5" operator="in" result="compositeViolet"/>
+      <feMerge>
+        <feMergeNode in="compositeViolet"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="green-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur5"/>
+      <feFlood flood-color="#10b981" opacity="0.8" result="floodGreen"/>
+      <feComposite in="floodGreen" in2="blur5" operator="in" result="compositeGreen"/>
+      <feMerge>
+        <feMergeNode in="compositeGreen"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g transform="translate(20, 15)">
+    
+    <path 
+      d="M 15 5 H 55 A 5 5 0 0 1 60 10 V 18 A 3 3 0 0 0 60 24 V 40 A 5 5 0 0 1 55 45 H 15 A 5 5 0 0 1 10 40 V 24 A 3 3 0 0 0 10 18 V 10 A 5 5 0 0 1 15 5 Z" 
+      stroke="#8b5cf6" 
+      stroke-width="2.5" 
+      fill="none" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+      filter="url(#violet-glow)"
+      transform="rotate(-20, 35, 25)" 
+    />
+    
+    <path 
+      d="M 20 35 L 30 45 L 55 15 L 50 15 M 55 15 L 55 20" 
+      stroke="#10b981" 
+      stroke-width="3.5" 
+      fill="none" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+      filter="url(#green-glow)"
+    />
+  </g>
+
+  <text x="100" y="52" font-family="'Inter', 'Roboto', sans-serif" font-weight="700" font-size="36">
+    <tspan fill="#ffffff">Event</tspan>
+    <tspan fill="#10b981">Pass</tspan>
+  </text>
+</svg>
