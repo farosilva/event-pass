@@ -58,7 +58,12 @@ Siga os passos abaixo para rodar o projeto localmente. O ambiente é totalmente 
    cd event-pass
    ```
 
-2. **Inicie o ambiente**:
+2. **Configure as variáveis de ambiente**:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Inicie o ambiente**:
    ```bash
    docker-compose up -d --build
    ```
@@ -69,7 +74,7 @@ Siga os passos abaixo para rodar o projeto localmente. O ambiente é totalmente 
    > * Executa automaticamente as migrações (`prisma db push`).
    > * Popula o banco com dados de teste (`seed.ts`).
 
-3. **Acesse a aplicação**:
+4. **Acesse a aplicação**:
 
    | Serviço | URL | Credenciais Padrão |
    | :--- | :--- | :--- |
