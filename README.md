@@ -19,6 +19,30 @@ O projeto opera em uma arquitetura **Monolito Modular** containerizada.
 
 ---
 
+## 🎯 Funcionalidades e Fluxos
+
+### Perfis de Usuário
+
+*   **Administrador**:
+    *   Criação e Gestão de Eventos.
+    *   Cadastro de novos administradores.
+    *   **Leitura de Ingressos (Check-in)**: Acesso à câmera para validar entradas.
+*   **Usuário (Participante)**:
+    *   Visualização da vitrine de eventos.
+    *   "Compra" (resgate gratuito) de ingressos.
+    *   Visualização dos próprios ingressos (QR Code).
+
+### Jornada do Ingresso
+
+1.  **Cadastro**: O usuário cria conta e recebe um **E-mail de Boas-vindas**.
+2.  **Compra**: O usuário resgata um ingresso para o evento desejado.
+    *   O sistema envia um **E-mail com o QR Code** do ingresso.
+    *   O ingresso também fica disponível na área "Meus Ingressos" da plataforma.
+3.  **No Evento (Check-in)**:
+    *   O Administrador acessa a área de Leitura (`/admin`).
+    *   Aponta a câmera para o QR Code (seja no celular do usuário ou no e-mail impresso).
+    *   O sistema valida o token e libera a entrada.
+
 ## 💻 Guia para Desenvolvedores
 
 Siga os passos abaixo para rodar o projeto localmente. O ambiente é totalmente automatizado via Docker.
