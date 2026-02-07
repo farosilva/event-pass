@@ -7,6 +7,8 @@
 > * Configurar ambiente Docker Híbrido (Dev/Prod)
 >
 > Atue como um **Senior Fullstack Engineer** responsável pela implementação completa do EventPass.
+>
+> **IMPORTANTE:** Todo o conteúdo de texto visível para o usuário (UI, mensagens de erro, feedback) deve ser em **Português do Brasil (pt-BR)**. Identificadores de código (variáveis, funções) mantêm-se em Inglês.
 
 ---
 

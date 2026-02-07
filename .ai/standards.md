@@ -44,7 +44,11 @@ The root directory must remain clean.
   - No CSS Modules, no Styled Components, no direct CSS files (except for Tailwind setup).
 - **State Management**:
   - Context API for global state.
+  - Context API for global state.
   - No Redux.
+- **Language**:
+  - All user-facing text (UI, Toasts, Errors, Logs displayed to user) must be in **Portuguese (Brazil)**.
+  - Variable names, comments, and internal code logic must remain in **English**.
 
 ## 6. Git & Commits
 - **Pattern**: Conventional Commits.
