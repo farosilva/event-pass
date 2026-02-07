@@ -12,5 +12,8 @@ export default defineConfig({
     server: {
         host: true, // Needed for Docker binding
         port: 3000,
+        watch: {
+            usePolling: true,
+        },
     },
 });

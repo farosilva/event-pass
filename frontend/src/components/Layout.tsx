@@ -1,6 +1,6 @@
-import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import logo from '../assets/logo-eventpass-header-transp.png';
 
 export const Layout = () => {
     const { user, logout } = useAuth();
@@ -8,8 +8,8 @@ export const Layout = () => {
     return (
         <div className="min-h-screen bg-dark-bg text-gray-100 flex flex-col">
             <nav className="bg-dark-card border-b border-gray-700 py-4 px-6 flex justify-between items-center shadow-lg">
-                <Link to="/" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary hover:opacity-80 transition-opacity">
-                    EventPass
+                <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
+                    <img src={logo} alt="EventPass" className="h-10 w-auto" />
                 </Link>
                 <div className="flex gap-4 items-center">
                     {user ? (

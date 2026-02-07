@@ -24,5 +24,6 @@ else
   npx tsx prisma/seed.ts
 fi
 
-echo "Starting application in watch mode..."
-exec npx tsx watch src/server.ts
+echo "Starting application in watch mode (polling)..."
+# Use nodemon with legacy watch (polling) because simple watch doesn't work well with Docker volumes on Windows
+exec npx nodemon --legacy-watch --watch src --ext ts,json --exec "npx tsx src/server.ts"
