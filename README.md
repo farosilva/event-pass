@@ -1,4 +1,5 @@
-# EventPass 🎟️
+![EventPass Logo](frontend/src/assets/logo-eventpass-header-transp.png)
+---
 
 Sistema de gestão de eventos e controle de acesso via QR Code.
 
