@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get install -y openssl
 # Stage 2: Development - Focus on reloading and debugging
 FROM base AS development
 # Install all dependencies including devDependencies (needed for checks, tests, etc.)
-RUN npm install
+RUN npm install --legacy-peer-deps
 # Copy the rest of the application code
 COPY . .
 # Generate Prisma Client
@@ -19,7 +19,7 @@ CMD ["npx", "tsx", "watch", "src/server.ts"]
 
 # Stage 3: Builder - Create the production build
 FROM base AS builder
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY . .
 RUN npx prisma generate
 RUN npm run build

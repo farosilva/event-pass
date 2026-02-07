@@ -2,11 +2,19 @@ import { prisma } from '../lib/prisma';
 import { AppError } from '../middlewares/error.middleware';
 import { verifyToken, signToken } from '../utils/jwt';
 import { randomUUID } from 'crypto';
+import { EmailService } from './email.service';
+import { logger } from '../lib/logger';
 
 export class TicketService {
+    private emailService: EmailService;
+
+    constructor() {
+        this.emailService = new EmailService();
+    }
+
     async buyTicket(userId: string, eventId: string) {
         // START ATOMIC TRANSACTION
-        return prisma.$transaction(async (tx: any) => {
+        const ticketWithDetails = await prisma.$transaction(async (tx: any) => {
             // 1. Check Event availability
             const event = await tx.event.findUnique({
                 where: { id: eventId },
@@ -45,6 +53,10 @@ export class TicketService {
                     eventId,
                     code: signToken({ ticketId, userId, eventId }), // Generate JWT with ticket info
                 },
+                include: {
+                    user: true,
+                    event: true
+                }
             });
 
             await tx.event.update({
@@ -58,6 +70,18 @@ export class TicketService {
 
             return ticket;
         });
+
+        // Send email asynchronously
+        this.emailService.sendTicketPurchasedEmail(
+            ticketWithDetails.user.email,
+            ticketWithDetails.user.name,
+            ticketWithDetails.event.title,
+            ticketWithDetails.code // Sending the code/token as ID for now, or use ticketWithDetails.id
+        ).catch(err => {
+            logger.error('[TicketService] Failed to send purchase email:', err);
+        });
+
+        return ticketWithDetails;
     }
 
     async listMyTickets(userId: string) {
@@ -88,7 +112,7 @@ export class TicketService {
         }
 
         // Now that we have the ticketId, we can proceed with validation
-        return prisma.$transaction(async (tx: any) => {
+        const result = await prisma.$transaction(async (tx: any) => {
             const ticket = await tx.ticket.findUnique({
                 where: { id: ticketId },
                 include: {
@@ -106,27 +130,50 @@ export class TicketService {
             }
 
             // Mark ticket as checked in
-            await tx.ticket.update({
+            const updatedTicket = await tx.ticket.update({
                 where: { id: ticketId },
                 data: { checkedInAt: new Date() },
+                include: {
+                    event: true,
+                    user: true
+                }
             });
 
             return {
                 message: 'Ticket successfully checked in',
                 ticket: {
-                    id: ticket.id,
-                    eventId: ticket.eventId,
-                    userId: ticket.userId,
-                    checkedInAt: new Date(),
+                    id: updatedTicket.id,
+                    eventId: updatedTicket.eventId,
+                    userId: updatedTicket.userId,
+                    checkedInAt: updatedTicket.checkedInAt,
                     event: {
-                        name: ticket.event.name,
-                        date: ticket.event.date,
+                        name: updatedTicket.event.title, // Fixed: accessing title not name if schema uses title
+                        date: updatedTicket.event.date,
                     },
                     user: {
-                        email: ticket.user.email,
+                        email: updatedTicket.user.email,
+                        name: updatedTicket.user.name
                     },
                 },
+                rawTicket: updatedTicket // Passing full object for email
             };
         });
+
+        // Send email asynchronously
+        if (result.rawTicket.checkedInAt) {
+            this.emailService.sendTicketValidatedEmail(
+                result.rawTicket.user.email,
+                result.rawTicket.user.name,
+                result.rawTicket.event.title,
+                result.rawTicket.checkedInAt
+            ).catch(err => {
+                logger.error('[TicketService] Failed to send validation email:', err);
+            });
+        }
+
+        return {
+            message: result.message,
+            ticket: result.ticket
+        };
     }
 }
