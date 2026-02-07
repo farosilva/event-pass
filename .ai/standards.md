@@ -33,7 +33,9 @@ The root directory must remain clean.
   - **Zod** is mandatory for all input validation (Controllers and DTOs).
 - **Error Handling**: 
   - Centralized Middleware is mandatory.
-  - No `console.log` in production code; use a logger.
+  - **Logging**:
+    - Use `src/lib/logger.ts` for all logs.
+    - `console.log` and `console.error` are **strictly prohibited** in production code.
 - **Seeding**:
   - Verification data must be realistic and localized (PT-BR).
   - Must cover diverse scenarios (multiple regions, future dates).
@@ -45,6 +47,10 @@ The root directory must remain clean.
 - **Styling**: 
   - **Tailwind CSS** utility classes ONLY.
   - No CSS Modules, no Styled Components, no direct CSS files (except for Tailwind setup).
+  - **Visual Identity**:
+    - **Glassmorphism**: Use `bg-opacity`, `backdrop-blur` for overlays and inputs to create a premium feel.
+  - **Responsiveness**:
+    - **Mobile First**: Navigation must use a **Hamburger Menu** on mobile devices.
 - **State Management**:
   - Context API for global state.
   - Context API for global state.

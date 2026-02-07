@@ -35,6 +35,17 @@
 - **Payment Gateway**: None.
 
 ## 5. Coverage & Availability
-- **Geographic Reach**: The platform must support events in all 5 regions of Brazil (Norte, Nordeste, Centro-Oeste, Sudeste, Sul).
+- **Geographic Reach**: The platform must support events in all 5 regions of Brazil:
+  - **Norte**: AM, RR, AP, PA, TO, RO, AC
+  - **Nordeste**: MA, PI, CE, RN, PB, PE, AL, SE, BA
+  - **Centro-Oeste**: MT, MS, GO, DF
+  - **Sudeste**: SP, RJ, ES, MG
+  - **Sul**: PR, RS, SC
 - **Planning Horizon**: Events are typically scheduled 6 to 8 months in advance.
+
+## 6. Data Seeding (Development)
+- **Volume**: A minimum of **15 events** must be seeded.
+- **Distribution**: Events must be distributed cases across all 5 regions.
+- **Timing**: All seeded events must be in the **future** (next 6-8 months) to ensure they appear in the "Upcoming" lists.
+- **Localization**: All titles, descriptions, and locations must be realistic and in **PT-BR**.
 

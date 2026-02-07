@@ -13,6 +13,7 @@ Any dependency not listed below requires explicit approval from the Technical Le
 - **QR Code**:
   - Geração: `qrcode.react`
   - Leitura: `react-qr-reader`
+- **Icons**: @heroicons/react
 
 ## 3. Backend
 - **Runtime**: Node.js 20+ (LTS)
@@ -20,7 +21,8 @@ Any dependency not listed below requires explicit approval from the Technical Le
 - **Database/ORM**: Prisma ORM
 - **Authentication**: JsonWebToken (JWT)
 - **Validation**: Zod (DTOs & Inputs)
-- **Email**: Nodemailer (Stub/Mock for dev)
+- **Logging**: Winston (Mandatory)
+- **Email**: Nodemailer + Ethereal (Dev/Test)
 
 ## 4. Infrastructure
 - **Containerization**: Docker & Docker Compose (Mandatory for all services)
