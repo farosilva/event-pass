@@ -12,7 +12,7 @@ Any dependency not listed below requires explicit approval from the Technical Le
 - **Validation**: Zod (Form schemata)
 - **QR Code**:
   - Geração: `qrcode.react`
-  - Leitura: `react-qr-reader`
+  - Leitura: `react-qr-reader` (Note: Requires manual media stream cleanup on unmount)
 - **Icons**: @heroicons/react
 
 ## 3. Backend
