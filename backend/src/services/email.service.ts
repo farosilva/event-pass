@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { logger } from '../lib/logger';
 
 export class EmailService {
     private transporter;
@@ -25,7 +26,7 @@ export class EmailService {
     }
 
     async sendWelcomeEmail(email: string, name: string) {
-        console.log(`[EmailService] Attempting to send welcome email to ${email}`);
+        logger.info(`[EmailService] Attempting to send welcome email to ${email}`);
 
         // In a real scenario, we would generate a test account if not provided
         const testAccount = await nodemailer.createTestAccount();
@@ -57,7 +58,7 @@ export class EmailService {
             `, // html body
         });
 
-        console.log(`[EmailService] Message sent: ${info.messageId}`);
-        console.log(`[EmailService] Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
+        logger.info(`[EmailService] Message sent: ${info.messageId}`);
+        logger.info(`[EmailService] Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
     }
 }

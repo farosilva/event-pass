@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
+import { logger } from '../lib/logger';
 
 export class AppError extends Error {
     public readonly statusCode: number;
@@ -31,7 +32,7 @@ export const errorMiddleware = (
         });
     }
 
-    console.error(err);
+    logger.error(err);
 
     return res.status(500).json({
         status: 'error',

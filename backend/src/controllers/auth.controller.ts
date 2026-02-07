@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
 import { EmailService } from '../services/email.service';
+import { logger } from '../lib/logger';
 
 const authService = new AuthService();
 const emailService = new EmailService();
@@ -11,7 +12,7 @@ export class AuthController {
 
         // Send welcome email asynchronously (fire and forget)
         emailService.sendWelcomeEmail(result.user.email, result.user.name).catch(err => {
-            console.error('[AuthController] Failed to send welcome email:', err);
+            logger.error('[AuthController] Failed to send welcome email:', err);
         });
 
         return res.status(201).json(result);

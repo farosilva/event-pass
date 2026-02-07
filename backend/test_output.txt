@@ -1,0 +1,318 @@
+﻿
+> eventpass-backend@1.0.0 test
+> jest integration/auth.test.ts
+
+node.exe : FAIL tests/
+integration/auth.test.
+ts (7.273 s)
+No C:\Program Files\no
+dejs\npm.ps1:29 
+caractere:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL tests   
+ /inte...st.ts (7.    
+273 s):String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  Auth Integration
+    ├ù should 
+register a new user
+    ├ù should login 
+with valid credentials
+    ├ù should not 
+login with invalid 
+credentials (1 ms)
+
+  ÔùÅ Auth 
+Integration ÔÇ║ 
+should register a new 
+user
+
+    PrismaClientInitia
+lizationError: 
+    Invalid `prisma.ti
+cket.deleteMany()` 
+invocation in
+    C:\Users\FRSoftwar
+es\jobs\FIAP\ai-driven
+-development\Aula 02\e
+vent-pass\backend\test
+s\integration\auth.tes
+t.ts:7:29
+
+      4 
+      5 
+describe('Auth 
+Integration', () => {
+      6     
+beforeAll(async () => 
+{
+    ÔåÆ 7         
+await prisma.ticket.de
+leteMany(
+    Can't reach 
+database server at 
+`localhost:5432`
+
+    Please make sure 
+your database server 
+is running at 
+`localhost:5432`.
+
+    [0m [90m  5 
+|[39m 
+describe([32m'Auth In
+tegration'[39m[33m,
+[39m () [33m=>[39m {
+     [90m  6 |[39m  
+   beforeAll([36masyn
+c[39m () 
+[33m=>[39m {
+    [31m[1m>[22m[3
+9m[90m  7 |[39m     
+    [36mawait[39m pr
+isma[33m.[39mticket
+[33m.[39mdeleteMany()
+[33m;[39m
+     [90m    |[39m  
+       
+[31m[1m^[22m[39m
+     [90m  8 |[39m  
+       
+[36mawait[39m prisma
+[33m.[39mevent[33m.
+[39mdeleteMany()[33m
+;[39m
+     [90m  9 |[39m  
+       
+[36mawait[39m prisma
+[33m.[39muser[33m.
+[39mdeleteMany()[33m;
+[39m
+     [90m 10 |[39m  
+   })[33m;[39m[0m
+
+      at 
+$n.handleRequestError 
+(node_modules/@prisma/
+client/runtime/library
+.js:121:7615)
+      at $n.handleAndL
+ogRequestError (node_m
+odules/@prisma/client/
+runtime/library.js:121
+:6623)
+      at $n.request (n
+ode_modules/@prisma/cl
+ient/runtime/library.j
+s:121:6307)
+      at l (node_modul
+es/@prisma/client/runt
+ime/library.js:130:963
+3)
+      at 
+Object.<anonymous> (te
+sts/integration/auth.t
+est.ts:7:9)
+
+  ÔùÅ Auth 
+Integration ÔÇ║ 
+should login with 
+valid credentials
+
+    PrismaClientInitia
+lizationError: 
+    Invalid `prisma.ti
+cket.deleteMany()` 
+invocation in
+    C:\Users\FRSoftwar
+es\jobs\FIAP\ai-driven
+-development\Aula 02\e
+vent-pass\backend\test
+s\integration\auth.tes
+t.ts:7:29
+
+      4 
+      5 
+describe('Auth 
+Integration', () => {
+      6     
+beforeAll(async () => 
+{
+    ÔåÆ 7         
+await prisma.ticket.de
+leteMany(
+    Can't reach 
+database server at 
+`localhost:5432`
+
+    Please make sure 
+your database server 
+is running at 
+`localhost:5432`.
+
+    [0m [90m  5 
+|[39m 
+describe([32m'Auth In
+tegration'[39m[33m,
+[39m () [33m=>[39m {
+     [90m  6 |[39m  
+   beforeAll([36masyn
+c[39m () 
+[33m=>[39m {
+    [31m[1m>[22m[3
+9m[90m  7 |[39m     
+    [36mawait[39m pr
+isma[33m.[39mticket
+[33m.[39mdeleteMany()
+[33m;[39m
+     [90m    |[39m  
+       
+[31m[1m^[22m[39m
+     [90m  8 |[39m  
+       
+[36mawait[39m prisma
+[33m.[39mevent[33m.
+[39mdeleteMany()[33m
+;[39m
+     [90m  9 |[39m  
+       
+[36mawait[39m prisma
+[33m.[39muser[33m.
+[39mdeleteMany()[33m;
+[39m
+     [90m 10 |[39m  
+   })[33m;[39m[0m
+
+      at 
+$n.handleRequestError 
+(node_modules/@prisma/
+client/runtime/library
+.js:121:7615)
+      at $n.handleAndL
+ogRequestError (node_m
+odules/@prisma/client/
+runtime/library.js:121
+:6623)
+      at $n.request (n
+ode_modules/@prisma/cl
+ient/runtime/library.j
+s:121:6307)
+      at l (node_modul
+es/@prisma/client/runt
+ime/library.js:130:963
+3)
+      at 
+Object.<anonymous> (te
+sts/integration/auth.t
+est.ts:7:9)
+
+  ÔùÅ Auth 
+Integration ÔÇ║ 
+should not login with 
+invalid credentials
+
+    PrismaClientInitia
+lizationError: 
+    Invalid `prisma.ti
+cket.deleteMany()` 
+invocation in
+    C:\Users\FRSoftwar
+es\jobs\FIAP\ai-driven
+-development\Aula 02\e
+vent-pass\backend\test
+s\integration\auth.tes
+t.ts:7:29
+
+      4 
+      5 
+describe('Auth 
+Integration', () => {
+      6     
+beforeAll(async () => 
+{
+    ÔåÆ 7         
+await prisma.ticket.de
+leteMany(
+    Can't reach 
+database server at 
+`localhost:5432`
+
+    Please make sure 
+your database server 
+is running at 
+`localhost:5432`.
+
+    [0m [90m  5 
+|[39m 
+describe([32m'Auth In
+tegration'[39m[33m,
+[39m () [33m=>[39m {
+     [90m  6 |[39m  
+   beforeAll([36masyn
+c[39m () 
+[33m=>[39m {
+    [31m[1m>[22m[3
+9m[90m  7 |[39m     
+    [36mawait[39m pr
+isma[33m.[39mticket
+[33m.[39mdeleteMany()
+[33m;[39m
+     [90m    |[39m  
+       
+[31m[1m^[22m[39m
+     [90m  8 |[39m  
+       
+[36mawait[39m prisma
+[33m.[39mevent[33m.
+[39mdeleteMany()[33m
+;[39m
+     [90m  9 |[39m  
+       
+[36mawait[39m prisma
+[33m.[39muser[33m.
+[39mdeleteMany()[33m;
+[39m
+     [90m 10 |[39m  
+   })[33m;[39m[0m
+
+      at 
+$n.handleRequestError 
+(node_modules/@prisma/
+client/runtime/library
+.js:121:7615)
+      at $n.handleAndL
+ogRequestError (node_m
+odules/@prisma/client/
+runtime/library.js:121
+:6623)
+      at $n.request (n
+ode_modules/@prisma/cl
+ient/runtime/library.j
+s:121:6307)
+      at l (node_modul
+es/@prisma/client/runt
+ime/library.js:130:963
+3)
+      at 
+Object.<anonymous> (te
+sts/integration/auth.t
+est.ts:7:9)
+
+Test Suites: 1 
+failed, 1 total
+Tests:       3 
+failed, 3 total
+Snapshots:   0 total
+Time:        7.842 s
+Ran all test suites 
+matching /integration\
+\auth.test.ts/i.
