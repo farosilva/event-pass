@@ -18,6 +18,56 @@ O projeto opera em uma arquitetura **Monolito Modular** containerizada.
 
 ---
 
+## 💻 Guia para Desenvolvedores
+
+Siga os passos abaixo para rodar o projeto localmente. O ambiente é totalmente automatizado via Docker.
+
+### Pré-requisitos
+* **Docker** e **Docker Compose** instalados.
+
+### Como Rodar
+
+1. **Clone o repositório** e entre na pasta:
+   ```bash
+   git clone <repo-url>
+   cd event-pass
+   ```
+
+2. **Inicie o ambiente**:
+   ```bash
+   docker-compose up -d --build
+   ```
+
+   > **O que isso faz?**
+   > * Sobe os containers (Backend, Frontend, Postgres).
+   > * O Backend aguarda o Banco de Dados ficar pronto.
+   > * Executa automaticamente as migrações (`prisma db push`).
+   > * Popula o banco com dados de teste (`seed.ts`).
+
+3. **Acesse a aplicação**:
+
+   | Serviço | URL | Credenciais Padrão |
+   | :--- | :--- | :--- |
+   | **Frontend** | [http://localhost:3000](http://localhost:3000) | - |
+   | **API** | [http://localhost:3001/api](http://localhost:3001/api) | - |
+   | **Swagger Docs** | [http://localhost:3001/api-docs](http://localhost:3001/api-docs) | - |
+   | **Admin Login** | - | **Email:** `admin@eventpass.com`<br>**Senha:** `admin123` |
+
+### Comandos Úteis
+
+* **Ver logs do backend** (útil para debug):
+  ```bash
+  docker logs -f eventpass_backend
+  ```
+
+* **Reiniciar do zero** (apaga banco e recria):
+  ```bash
+  docker-compose down -v
+  docker-compose up -d --build
+  ```
+
+---
+
 ## 📂 Estrutura do Projeto
 
 ```bash
@@ -26,3 +76,4 @@ O projeto opera em uma arquitetura **Monolito Modular** containerizada.
 ├── backend/            # API REST (Node.js + Express)
 ├── frontend/           # Aplicação Web (React + Vite)
 └── docker-compose.yml  # Orquestração do ambiente de desenvolvimento
+```
