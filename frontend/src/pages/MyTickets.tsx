@@ -39,7 +39,7 @@ export const MyTickets = () => {
                         key={ticket.id}
                         className={`bg-dark-card border border-gray-700 rounded-xl p-6 flex flex-col md:flex-row gap-6 shadow-xl transition-all ${ticket.checkedInAt ? 'opacity-60 grayscale' : 'hover:border-primary/50'}`}
                     >
-                        <div className="bg-white p-4 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <div className="bg-white p-4 rounded-lg flex-shrink-0 flex items-center justify-center h-fit">
                             <QRCodeSVG value={ticket.code} size={128} className={ticket.checkedInAt ? 'opacity-50' : ''} />
                         </div>
                         <div className="flex-1 space-y-2">
