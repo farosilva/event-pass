@@ -36,3 +36,4 @@
 - **Decision**: QR Code JWT Signature Validation occurs on the Backend.
 - **Context**: Preventing client-side spoofing of valid tickets.
 - **Consequence**: Backend must share/know the signing secret used to generate the QR content.
+- **Update**: Frontend decodes the JWT (without verifying signature) for instant UX feedback (e.g. showing Event Title).

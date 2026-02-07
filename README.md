@@ -67,6 +67,15 @@ Siga os passos abaixo para rodar o projeto localmente. O ambiente é totalmente 
   docker-compose up -d --build
   ```
 
+### Fluxo de Validação de QR Code
+
+O sistema implementa uma validação segura com feedback imediato:
+
+1.  **Geração (Backend)**: O QR Code contém um Token JWT assinado com `ticketId` e `eventTitle`.
+2.  **Preview (Frontend)**: O Scanner decodifica o JWT localmente para exibir o nome do evento ("Validando ingresso para...") imediatamente.
+3.  **Validação (API)**: O token é enviado para `/validate`, onde a assinatura e validade são checadas.
+4.  **Anti-Loop**: O Frontend ignora leituras repetidas do **mesmo código** por 5 segundos para evitar chamadas duplicadas se o usuário mantiver a câmera apontada.
+
 ---
 
 ## 📂 Estrutura do Projeto

@@ -64,7 +64,7 @@ Adote a metodologia **Backend First**. Não escreva React antes da API estar tes
 2.  **Segurança:** JWT, Hash de Senha e **Zod** para validação estrita.
 3.  **Lógica de Negócio (CRÍTICO):**
     * Usar `Prisma.$transaction` para evitar *overbooking*.
-    * **QR Code Seguro:** O conteúdo deve ser um Token JWT assinado (com ID do ticket).
+    * **QR Code Seguro:** O conteúdo deve ser um Token JWT assinado (com ID do ticket e Título do Evento para preview).
 6.  **Seed (Obrigatório):** Criar script `prisma seed` com:
     * 1 Admin (`admin@eventpass.com` / `admin123`)
     * **15 Eventos** distribuídos nas **5 regiões do Brasil** (Norte, Nordeste, Centro-Oeste, Sudeste, Sul).
@@ -87,6 +87,8 @@ Adote a metodologia **Backend First**. Não escreva React antes da API estar tes
 5.  **Leitor de QR:**
     * Ao ler, bater na API para validar.
     * Feedback visual imediato: **Tela Verde (Sucesso)** ou **Tela Vermelha (Erro)**.
+    * **UX:** Mostrar nome do evento decodificado durante a validação.
+    * **Segurança:** Bloquear leitura repetida do mesmo código por 5 segundos (evitar loop).
 
 ---
 
