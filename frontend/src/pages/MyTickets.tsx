@@ -26,13 +26,13 @@ export const MyTickets = () => {
             const { data } = await api.get('/tickets/me');
             setTickets(data);
         } catch (err) {
-            toast.error('Failed to load tickets');
+            toast.error('Falha ao carregar ingressos');
         }
     };
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-white">My Tickets</h1>
+            <h1 className="text-3xl font-bold text-white">Meus Ingressos</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {tickets.map((ticket) => (
                     <div
@@ -44,19 +44,19 @@ export const MyTickets = () => {
                         </div>
                         <div className="flex-1 space-y-2">
                             <h3 className="text-xl font-bold text-primary">{ticket.event.title}</h3>
-                            <p className="text-gray-400">{new Date(ticket.event.date).toLocaleDateString()} at {new Date(ticket.event.date).toLocaleTimeString()}</p>
+                            <p className="text-gray-400">{new Date(ticket.event.date).toLocaleDateString()} às {new Date(ticket.event.date).toLocaleTimeString()}</p>
                             <p className="text-gray-400">{ticket.event.location}</p>
                             <div className="mt-4">
                                 {ticket.checkedInAt ? (
                                     <div className="flex flex-col gap-2">
                                         <span className="w-fit bg-red-500/20 text-red-500 px-3 py-1 rounded text-sm font-bold border border-red-500/30">
-                                            ❌ ALREADY USED
+                                            ❌ JÁ UTILIZADO
                                         </span>
-                                        <p className="text-gray-400">Used at: {new Date(ticket.checkedInAt).toLocaleDateString()} at {new Date(ticket.checkedInAt).toLocaleTimeString()}</p>
+                                        <p className="text-gray-400">Usado em: {new Date(ticket.checkedInAt).toLocaleDateString()} às {new Date(ticket.checkedInAt).toLocaleTimeString()}</p>
                                     </div>
                                 ) : (
                                     <span className="w-fit bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded text-sm font-bold border border-emerald-500/30">
-                                        ✅ VALID
+                                        ✅ VÁLIDO
                                     </span>
                                 )}
                             </div>
@@ -67,7 +67,7 @@ export const MyTickets = () => {
             </div>
             {tickets.length === 0 && (
                 <div className="text-center text-gray-500 py-10">
-                    You haven't purchased any tickets yet.
+                    Você ainda não comprou ingressos.
                 </div>
             )}
         </div>

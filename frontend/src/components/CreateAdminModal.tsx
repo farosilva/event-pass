@@ -13,10 +13,10 @@ export const CreateAdminModal = ({ onClose }: Props) => {
         e.preventDefault();
         try {
             await api.post('/auth/admin', formData);
-            toast.success('Admin created successfully');
+            toast.success('Admin criado com sucesso');
             onClose();
         } catch (err: any) {
-            toast.error(err.response?.data?.message || 'Failed to create admin');
+            toast.error(err.response?.data?.message || 'Falha ao criar admin');
         }
     };
 
@@ -29,10 +29,10 @@ export const CreateAdminModal = ({ onClose }: Props) => {
                 >
                     ✕
                 </button>
-                <h2 className="text-2xl font-bold mb-6 text-white">Invite New Admin</h2>
+                <h2 className="text-2xl font-bold mb-6 text-white">Convidar Novo Admin</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-gray-400 mb-1 text-sm">Name</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Nome</label>
                         <input
                             type="text"
                             required
@@ -52,7 +52,7 @@ export const CreateAdminModal = ({ onClose }: Props) => {
                         />
                     </div>
                     <div>
-                        <label className="block text-gray-400 mb-1 text-sm">Password</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Senha</label>
                         <input
                             type="password"
                             required
@@ -65,7 +65,7 @@ export const CreateAdminModal = ({ onClose }: Props) => {
                         type="submit"
                         className="w-full bg-primary hover:bg-primary-hover text-white font-bold py-2 rounded transition-colors mt-4"
                     >
-                        Create Admin Account
+                        Criar Conta Admin
                     </button>
                 </form>
             </div>

@@ -21,7 +21,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
                 const { data } = await api.post('/tickets/validate', { token });
                 setScanResult({
                     status: 'success',
-                    message: 'Valid Ticket',
+                    message: 'Ingresso Válido',
                     data: data.ticket
                 });
 
@@ -34,7 +34,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
             } catch (err: any) {
                 setScanResult({
                     status: 'error',
-                    message: err.response?.data?.message || 'Invalid Ticket'
+                    message: err.response?.data?.message || 'Ingresso Inválido'
                 });
 
                 // Auto reset after 3 seconds
@@ -63,7 +63,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
     return (
         <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center ${bgColor} transition-colors duration-500`}>
             <button onClick={onClose} className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full z-10">
-                ✕ Close
+                ✕ Fechar
             </button>
 
             <div className="w-full max-w-sm aspect-square relative mb-6">
@@ -84,18 +84,18 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
             {/* Status Messages */}
             <div className="text-white text-center px-4 mb-6 min-h-[100px]">
                 {scanResult.status === 'idle' && (
-                    <p className="text-xl animate-bounce">Point camera at QR Code</p>
+                    <p className="text-xl animate-bounce">Aponte a câmera para o QR Code</p>
                 )}
                 {scanResult.status === 'success' && (
                     <div className="space-y-2">
-                        <h2 className="text-4xl font-bold mb-2">✅ APPROVED</h2>
-                        <p className="text-xl">User: {scanResult.data?.user?.email}</p>
-                        <p>Event: {scanResult.data?.event?.title}</p>
+                        <h2 className="text-4xl font-bold mb-2">✅ APROVADO</h2>
+                        <p className="text-xl">Usuário: {scanResult.data?.user?.email}</p>
+                        <p>Evento: {scanResult.data?.event?.title}</p>
                     </div>
                 )}
                 {scanResult.status === 'error' && (
                     <div>
-                        <h2 className="text-4xl font-bold mb-2">❌ DENIED</h2>
+                        <h2 className="text-4xl font-bold mb-2">❌ NEGADO</h2>
                         <p className="text-xl">{scanResult.message}</p>
                     </div>
                 )}
@@ -106,7 +106,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
                 <form onSubmit={handleManualSubmit} className="w-full max-w-sm px-8 flex gap-2 z-20">
                     <input
                         type="text"
-                        placeholder="Or type ticket code..."
+                        placeholder="Ou digite o código do ingresso..."
                         className="flex-1 bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-white"
                         value={manualCode}
                         onChange={(e) => setManualCode(e.target.value)}
@@ -116,7 +116,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
                         disabled={!manualCode}
                         className="bg-white text-black font-bold px-6 py-3 rounded-lg disabled:opacity-50 hover:bg-gray-200 transition-colors"
                     >
-                        Check
+                        Verificar
                     </button>
                 </form>
             )}

@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 const loginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(1, "Password is required"),
+    password: z.string().min(1, "Senha é obrigatória"),
 });
 
 export const Login = () => {
@@ -29,7 +29,7 @@ export const Login = () => {
         try {
             const { data } = await api.post('/auth/login', formData);
             login(data.token, data.user);
-            toast.success(`Welcome back, ${data.user.name}!`);
+            toast.success(`Bem-vindo de volta, ${data.user.name}!`);
 
             if (data.user.role === 'ADMIN') {
                 navigate('/admin');
@@ -37,7 +37,7 @@ export const Login = () => {
                 navigate('/');
             }
         } catch (err: any) {
-            const msg = err.response?.data?.message || 'Login failed';
+            const msg = err.response?.data?.message || 'Login falhou';
             setError(msg);
             toast.error(msg);
         }
@@ -45,7 +45,7 @@ export const Login = () => {
 
     return (
         <div className="max-w-md mx-auto mt-10 bg-dark-card p-8 rounded-xl shadow-2xl border border-gray-700">
-            <h2 className="text-3xl font-bold mb-6 text-center text-white">Login</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-white">Entrar</h2>
             {error && <div className="bg-danger/20 text-danger border border-danger/50 p-3 rounded mb-4 text-sm">{error}</div>}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -58,7 +58,7 @@ export const Login = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-gray-400 mb-1 text-sm">Password</label>
+                    <label className="block text-gray-400 mb-1 text-sm">Senha</label>
                     <input
                         type="password"
                         className="w-full bg-dark-input border border-gray-600 rounded px-4 py-2 text-white focus:outline-none focus:border-primary transition-colors"
@@ -70,11 +70,11 @@ export const Login = () => {
                     type="submit"
                     className="w-full bg-primary hover:bg-primary-hover text-white font-bold py-2 rounded transition-colors"
                 >
-                    Sign In
+                    Entrar
                 </button>
             </form>
             <p className="mt-4 text-center text-gray-400 text-sm">
-                Don't have an account? <Link to="/register" className="text-secondary hover:text-white">Register</Link>
+                Não tem uma conta? <Link to="/register" className="text-secondary hover:text-white">Registre-se</Link>
             </p>
         </div>
     );

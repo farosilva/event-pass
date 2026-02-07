@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 const registerSchema = z.object({
-    name: z.string().min(3, "Name must be at least 3 characters"),
+    name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
     email: z.string().email(),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
 });
 
 export const Register = () => {
@@ -30,10 +30,10 @@ export const Register = () => {
         try {
             const { data } = await api.post('/auth/register', formData);
             login(data.token, data.user);
-            toast.success('Account created successfully!');
+            toast.success('Conta criada com sucesso!');
             navigate('/');
         } catch (err: any) {
-            const msg = err.response?.data?.message || 'Registration failed';
+            const msg = err.response?.data?.message || 'Falha no cadastro';
             setError(msg);
             toast.error(msg);
         }
@@ -41,11 +41,11 @@ export const Register = () => {
 
     return (
         <div className="max-w-md mx-auto mt-10 bg-dark-card p-8 rounded-xl shadow-2xl border border-gray-700">
-            <h2 className="text-3xl font-bold mb-6 text-center text-white">Create Account</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-white">Criar Conta</h2>
             {error && <div className="bg-danger/20 text-danger border border-danger/50 p-3 rounded mb-4 text-sm">{error}</div>}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-gray-400 mb-1 text-sm">Name</label>
+                    <label className="block text-gray-400 mb-1 text-sm">Nome</label>
                     <input
                         type="text"
                         className="w-full bg-dark-input border border-gray-600 rounded px-4 py-2 text-white focus:outline-none focus:border-primary transition-colors"
@@ -63,7 +63,7 @@ export const Register = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-gray-400 mb-1 text-sm">Password</label>
+                    <label className="block text-gray-400 mb-1 text-sm">Senha</label>
                     <input
                         type="password"
                         className="w-full bg-dark-input border border-gray-600 rounded px-4 py-2 text-white focus:outline-none focus:border-primary transition-colors"
@@ -75,11 +75,11 @@ export const Register = () => {
                     type="submit"
                     className="w-full bg-primary hover:bg-primary-hover text-white font-bold py-2 rounded transition-colors"
                 >
-                    Sign Up
+                    Cadastrar
                 </button>
             </form>
             <p className="mt-4 text-center text-gray-400 text-sm">
-                Already have an account? <Link to="/login" className="text-secondary hover:text-white">Login</Link>
+                Já tem uma conta? <Link to="/login" className="text-secondary hover:text-white">Entrar</Link>
             </p>
         </div>
     );

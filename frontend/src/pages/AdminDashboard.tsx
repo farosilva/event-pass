@@ -20,10 +20,10 @@ export const AdminDashboard = () => {
         e.preventDefault();
         try {
             await api.post('/events', eventData);
-            toast.success('Event created successfully');
+            toast.success('Evento criado com sucesso');
             setEventData({ title: '', description: '', date: '', location: '', totalTickets: 0 });
         } catch (err: any) {
-            toast.error(err.response?.data?.message || 'Failed to create event');
+            toast.error(err.response?.data?.message || 'Falha ao criar evento');
         }
     };
 
@@ -33,40 +33,40 @@ export const AdminDashboard = () => {
             {showCreateAdmin && <CreateAdminModal onClose={() => setShowCreateAdmin(false)} />}
 
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+                <h1 className="text-3xl font-bold text-white">Painel Admin</h1>
                 <div className="flex gap-4">
                     <button
                         onClick={() => setShowCreateAdmin(true)}
                         className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all"
                     >
-                        <span>👤</span> New Admin
+                        <span>👤</span> Novo Admin
                     </button>
                     <button
                         onClick={() => setShowScanner(true)}
                         className="bg-secondary hover:bg-secondary-hover text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-secondary/20 flex items-center gap-2 transition-all"
                     >
-                        <span>📷</span> Scan Tickets
+                        <span>📷</span> Ler Ingressos
                     </button>
                 </div>
             </div>
 
             <div className="bg-dark-card border border-gray-700 p-8 rounded-xl shadow-xl">
-                <h2 className="text-2xl font-bold mb-6 text-gray-200">Create New Event</h2>
+                <h2 className="text-2xl font-bold mb-6 text-gray-200">Criar Novo Evento</h2>
                 <form onSubmit={handleCreateEvent} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="col-span-2">
-                        <label className="block text-gray-400 mb-1 text-sm">Event Title</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Título do Evento</label>
                         <input
                             type="text"
                             required
                             className="w-full bg-dark-input border border-gray-600 rounded px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-secondary"
-                            placeholder="e.g. Summer Festival 2024"
+                            placeholder="Ex: Festival de Verão 2024"
                             value={eventData.title}
                             onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
                         />
                     </div>
 
                     <div className="col-span-2">
-                        <label className="block text-gray-400 mb-1 text-sm">Description</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Descrição</label>
                         <textarea
                             required
                             rows={3}
@@ -77,7 +77,7 @@ export const AdminDashboard = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-400 mb-1 text-sm">Date & Time</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Data e Hora</label>
                         <input
                             type="datetime-local"
                             required
@@ -88,19 +88,19 @@ export const AdminDashboard = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-400 mb-1 text-sm">Location</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Localização</label>
                         <input
                             type="text"
                             required
                             className="w-full bg-dark-input border border-gray-600 rounded px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-secondary"
-                            placeholder="e.g. Convention Center"
+                            placeholder="Ex: Centro de Convenções"
                             value={eventData.location}
                             onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
                         />
                     </div>
 
                     <div>
-                        <label className="block text-gray-400 mb-1 text-sm">Total Tickets</label>
+                        <label className="block text-gray-400 mb-1 text-sm">Total de Ingressos</label>
                         <input
                             type="number"
                             required
@@ -116,7 +116,7 @@ export const AdminDashboard = () => {
                             type="submit"
                             className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-bold transition-all shadow-lg shadow-primary/20"
                         >
-                            Create Event
+                            Criar Evento
                         </button>
                     </div>
                 </form>
