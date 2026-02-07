@@ -21,7 +21,7 @@ type LoginInput = z.infer<typeof loginSchema>;
 
 export class AuthService {
     async register(data: RegisterInput) {
-        const { email, password, name, role } = registerSchema.parse(data);
+        const { email, password, name } = registerSchema.parse(data);
 
         const userExists = await prisma.user.findUnique({ where: { email } });
         if (userExists) {
@@ -35,13 +35,35 @@ export class AuthService {
                 email,
                 name,
                 password: hashedPassword,
-                role: role || 'USER',
+                role: 'USER', // Always force USER role for public registration
             },
         });
 
         const token = signToken({ userId: user.id, role: user.role });
 
         return { user: { id: user.id, name: user.name, email: user.email, role: user.role }, token };
+    }
+
+    async createAdmin(data: RegisterInput) {
+        const { email, password, name } = registerSchema.parse(data);
+
+        const userExists = await prisma.user.findUnique({ where: { email } });
+        if (userExists) {
+            throw new AppError('User already exists');
+        }
+
+        const hashedPassword = await hashPassword(password);
+
+        const user = await prisma.user.create({
+            data: {
+                email,
+                name,
+                password: hashedPassword,
+                role: 'ADMIN',
+            },
+        });
+
+        return { id: user.id, name: user.name, email: user.email, role: user.role };
     }
 
     async login(data: LoginInput) {

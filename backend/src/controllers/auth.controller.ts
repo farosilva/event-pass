@@ -13,4 +13,9 @@ export class AuthController {
         const result = await authService.login(req.body);
         return res.json(result);
     }
+
+    async createAdmin(req: Request, res: Response) {
+        const result = await authService.createAdmin(req.body);
+        return res.status(201).json(result);
+    }
 }

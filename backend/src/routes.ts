@@ -16,6 +16,7 @@ routes.get('/health', (req, res) => {
 // Auth
 routes.post('/auth/register', authController.register);
 routes.post('/auth/login', authController.login);
+routes.post('/auth/admin', authMiddleware, adminMiddleware, authController.createAdmin);
 
 // Events
 routes.get('/events', eventController.list);

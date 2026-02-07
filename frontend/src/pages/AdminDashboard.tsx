@@ -3,8 +3,11 @@ import { api } from '../services/api';
 import { toast } from 'react-toastify';
 import { QRScanner } from '../components/QRScanner';
 
+import { CreateAdminModal } from '../components/CreateAdminModal';
+
 export const AdminDashboard = () => {
     const [showScanner, setShowScanner] = useState(false);
+    const [showCreateAdmin, setShowCreateAdmin] = useState(false);
     const [eventData, setEventData] = useState({
         title: '',
         description: '',
@@ -27,15 +30,24 @@ export const AdminDashboard = () => {
     return (
         <div className="space-y-8">
             {showScanner && <QRScanner onClose={() => setShowScanner(false)} />}
+            {showCreateAdmin && <CreateAdminModal onClose={() => setShowCreateAdmin(false)} />}
 
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
-                <button
-                    onClick={() => setShowScanner(true)}
-                    className="bg-secondary hover:bg-secondary-hover text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-secondary/20 flex items-center gap-2"
-                >
-                    <span>📷</span> Scan Tickets
-                </button>
+                <div className="flex gap-4">
+                    <button
+                        onClick={() => setShowCreateAdmin(true)}
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all"
+                    >
+                        <span>👤</span> New Admin
+                    </button>
+                    <button
+                        onClick={() => setShowScanner(true)}
+                        className="bg-secondary hover:bg-secondary-hover text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-secondary/20 flex items-center gap-2 transition-all"
+                    >
+                        <span>📷</span> Scan Tickets
+                    </button>
+                </div>
             </div>
 
             <div className="bg-dark-card border border-gray-700 p-8 rounded-xl shadow-xl">
