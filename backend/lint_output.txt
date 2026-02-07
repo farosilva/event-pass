@@ -2,65 +2,12 @@
 > eventpass-backend@1.0.0 lint
 > eslint src/**/*.ts
 
-node.exe : 
-(node:26760) [MODULE_T
-YPELESS_PACKAGE_JSON] 
-Warning: Module type 
-of file:///C:/Users/FR
-Softwares/jobs/FIAP/ai
--driven-development/Au
-la%2002/event-pass/bac
-kend/eslint.config.js?
-mtime=1770475831254 
-is not specified and 
-it doesn't parse as 
-CommonJS.
-No C:\Program Files\no
-dejs\npm.ps1:29 
-caractere:3
-+   & $NODE_EXE 
-$NPM_CLI_JS $args
-+   ~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~
-    + CategoryInfo    
-          : NotSpeci  
-  fied: ((node:2676   
- 0) [M...se as Com    
-monJS.:String) []    
-, RemoteException
-    + FullyQualifiedE 
-   rrorId : NativeCo  
-  mmandError
- 
-Reparsing as ES 
-module because module 
-syntax was detected. 
-This incurs a 
-performance overhead.
-To eliminate this 
-warning, add "type": 
-"module" to C:\Users\F
-RSoftwares\jobs\FIAP\a
-i-driven-development\A
-ula 02\event-pass\back
-end\package.json.
-(Use `node 
---trace-warnings ...` 
-to show where the 
-warning was created)
 
 C:\Users\FRSoftwares\jobs\FIAP\ai-driven-development\Aula 02\event-pass\backend\src\middlewares\auth.middleware.ts
-   7:5   error    ES2015 module syntax is preferred over namespaces  @typescript-eslint/no-namespace
-  34:14  warning  'err' is defined but never used                    @typescript-eslint/no-unused-vars
-
-C:\Users\FRSoftwares\jobs\FIAP\ai-driven-development\Aula 02\event-pass\backend\src\middlewares\error.middleware.ts
-  18:5  warning  'next' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  35:14  warning  '_err' is defined but never used  @typescript-eslint/no-unused-vars
 
 C:\Users\FRSoftwares\jobs\FIAP\ai-driven-development\Aula 02\event-pass\backend\src\services\ticket.service.ts
-  86:18  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+  86:18  warning  '_e' is defined but never used  @typescript-eslint/no-unused-vars
 
-C:\Users\FRSoftwares\jobs\FIAP\ai-driven-development\Aula 02\event-pass\backend\src\utils\jwt.ts
-  5:11  warning  'TokenPayload' is defined but never used  @typescript-eslint/no-unused-vars
-
-Ô£û 5 problems (1 error, 4 warnings)
+Ô£û 2 problems (0 errors, 2 warnings)
 
