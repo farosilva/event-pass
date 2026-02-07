@@ -25,9 +25,9 @@ async function main() {
     // 2. Create Events
     const events = [
         {
-            title: 'Tech Summit 2024',
+            title: 'Tech Summit 2026',
             description: 'The biggest tech conference of the year.',
-            date: new Date('2024-12-10T09:00:00Z'),
+            date: new Date('2026-12-10T09:00:00Z'),
             location: 'Convention Center',
             totalTickets: 100,
             availableTickets: 100,
@@ -35,7 +35,7 @@ async function main() {
         {
             title: 'Workshop React Advanced',
             description: 'Learn deep internals of React.',
-            date: new Date('2024-11-20T14:00:00Z'),
+            date: new Date('2026-11-20T14:00:00Z'),
             location: 'Tech Hub',
             totalTickets: 30,
             availableTickets: 30,
@@ -43,7 +43,7 @@ async function main() {
         {
             title: 'Music Festival',
             description: 'Live bands and good vibes.',
-            date: new Date('2025-01-15T18:00:00Z'),
+            date: new Date('2026-06-15T18:00:00Z'),
             location: 'City Park',
             totalTickets: 500,
             availableTickets: 500,
