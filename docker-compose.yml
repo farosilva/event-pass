@@ -20,6 +20,7 @@ services:
       context: ./backend
       target: development
     container_name: eventpass_backend
+    command: sh start.sh
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-eventpass}?schema=public
       PORT: ${PORT:-3001}
@@ -39,6 +40,8 @@ services:
       context: ./frontend
       target: development
     container_name: eventpass_frontend
+    depends_on:
+      - backend
     environment:
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3001/api}
     ports:
