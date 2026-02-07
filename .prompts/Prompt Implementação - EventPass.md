@@ -65,9 +65,11 @@ Adote a metodologia **Backend First**. Não escreva React antes da API estar tes
 3.  **Lógica de Negócio (CRÍTICO):**
     * Usar `Prisma.$transaction` para evitar *overbooking*.
     * **QR Code Seguro:** O conteúdo deve ser um Token JWT assinado (com ID do ticket).
-4.  **Seed:** Criar script `prisma seed` com:
+6.  **Seed (Obrigatório):** Criar script `prisma seed` com:
     * 1 Admin (`admin@eventpass.com` / `admin123`)
-    * 3 Eventos fictícios.
+    * **15 Eventos** distribuídos nas **5 regiões do Brasil** (Norte, Nordeste, Centro-Oeste, Sudeste, Sul).
+    * Datas devem ser **futuras (6 a 8 meses a frente)**.
+    * Conteúdo (Títulos/Descrições) em **Português do Brasil**.
 5.  **Testes (BLOQUEANTE):**
     * Configurar Jest + Supertest.
     * Criar testes de integração para o fluxo de inscrição e validação.

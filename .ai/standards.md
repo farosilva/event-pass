@@ -34,6 +34,9 @@ The root directory must remain clean.
 - **Error Handling**: 
   - Centralized Middleware is mandatory.
   - No `console.log` in production code; use a logger.
+- **Seeding**:
+  - Verification data must be realistic and localized (PT-BR).
+  - Must cover diverse scenarios (multiple regions, future dates).
 
 ## 5. Frontend (React)
 - **Components**: Functional Components with Hooks only.

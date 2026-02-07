@@ -33,3 +33,8 @@
 ## 4. Financial
 - **Cost**: All events are **100% Free**.
 - **Payment Gateway**: None.
+
+## 5. Coverage & Availability
+- **Geographic Reach**: The platform must support events in all 5 regions of Brazil (Norte, Nordeste, Centro-Oeste, Sudeste, Sul).
+- **Planning Horizon**: Events are typically scheduled 6 to 8 months in advance.
+
