@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { api } from '../services/api';
+import React, { createContext, useContext, useState } from 'react';
 
 interface User {
     id: string;
@@ -22,20 +21,14 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const storedToken = localStorage.getItem('token');
+    const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
+    const [user, setUser] = useState<User | null>(() => {
         const storedUser = localStorage.getItem('user');
-
-        if (storedToken && storedUser) {
-            setToken(storedToken);
-            setUser(JSON.parse(storedUser));
-        }
-        setLoading(false);
-    }, []);
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
+    // Since we lazy load from localStorage, we don't need a loading state for this specific check anymore
+    // But we might keep it if we plan to validate token against API. For now, we'll set it to false.
+    const [loading] = useState(false);
 
     const login = (newToken: string, newUser: User) => {
         localStorage.setItem('token', newToken);

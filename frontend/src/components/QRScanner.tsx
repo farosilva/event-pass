@@ -10,7 +10,7 @@ export const QRScanner: React.FC<QRScannerProps> = ({ onClose }) => {
     const [scanResult, setScanResult] = useState<{ status: 'idle' | 'success' | 'error'; message?: string; data?: any }>({ status: 'idle' });
     const [scanning, setScanning] = useState(true);
 
-    const handleScan = async (result: any, error: any) => {
+    const handleScan = async (result: any, _error: any) => {
         if (!scanning) return;
 
         if (result) {

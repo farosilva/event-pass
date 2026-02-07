@@ -18,17 +18,16 @@ export const MyTickets = () => {
     const [tickets, setTickets] = useState<Ticket[]>([]);
 
     useEffect(() => {
+        const loadTickets = async () => {
+            try {
+                const { data } = await api.get('/tickets/me');
+                setTickets(data);
+            } catch {
+                toast.error('Falha ao carregar ingressos');
+            }
+        };
         loadTickets();
     }, []);
-
-    const loadTickets = async () => {
-        try {
-            const { data } = await api.get('/tickets/me');
-            setTickets(data);
-        } catch (err) {
-            toast.error('Falha ao carregar ingressos');
-        }
-    };
 
     return (
         <div className="space-y-6">

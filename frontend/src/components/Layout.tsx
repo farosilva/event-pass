@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/logo-eventpass-header-transp.png';
 import { Bars3Icon, XMarkIcon, TicketIcon } from '@heroicons/react/24/outline';
@@ -7,7 +7,6 @@ import { Bars3Icon, XMarkIcon, TicketIcon } from '@heroicons/react/24/outline';
 export const Layout = () => {
     const { user, logout } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const location = useLocation();
 
     // Close menu when route changes
     if (isMenuOpen) {

@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { getRegionByLocation } from '../utils/regions';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; // Assuming heroicons is installed or using a similar icon
 
 interface Event {
     id: string;
@@ -21,18 +20,19 @@ export const EventList = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        loadEvents();
-    }, []);
-
-    const loadEvents = async () => {
+    const loadEvents = useCallback(async () => {
         try {
             const { data } = await api.get('/events');
             setEvents(data);
-        } catch (err) {
+        } catch {
             toast.error('Falha ao carregar eventos');
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        loadEvents();
+    }, [loadEvents]);
 
     const handleBuy = async (eventId: string) => {
         if (!user) {
