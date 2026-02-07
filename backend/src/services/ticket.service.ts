@@ -83,7 +83,7 @@ export class TicketService {
             } else {
                 throw new Error('Invalid token payload');
             }
-        } catch (e) {
+        } catch (_e) {
             throw new AppError('Invalid QR Code', 400);
         }
 

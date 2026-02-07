@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const SECRET = process.env.JWT_SECRET || 'secret';
 
-interface TokenPayload {
+export interface TokenPayload {
     userId: string;
     role: string;
 }

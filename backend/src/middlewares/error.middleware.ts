@@ -15,7 +15,7 @@ export const errorMiddleware = (
     err: Error,
     req: Request,
     res: Response,
-    next: NextFunction
+    _next: NextFunction
 ) => {
     if (err instanceof ZodError) {
         return res.status(400).json({

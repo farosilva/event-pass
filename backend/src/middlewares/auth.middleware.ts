@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwt';
+import { verifyToken, TokenPayload } from '../utils/jwt';
 import { AppError } from './error.middleware';
 
 // Extend Express Request interface
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Express {
         interface Request {
             user?: {
@@ -28,10 +29,10 @@ export const authMiddleware = (
     const [, token] = authHeader.split(' ');
 
     try {
-        const decoded = verifyToken<{ userId: string; role: string }>(token);
+        const decoded = verifyToken<TokenPayload>(token);
         req.user = decoded;
         return next();
-    } catch (err) {
+    } catch (_err) {
         throw new AppError('Invalid token', 401);
     }
 };
