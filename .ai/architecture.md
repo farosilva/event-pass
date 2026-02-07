@@ -33,6 +33,6 @@
 - **Consequence**: Tighter coupling but faster development and simpler deployment.
 
 ### ADR-002: Validation Logic
-- **Decision**: QR Code Hash Validation occurs on the Backend.
+- **Decision**: QR Code JWT Signature Validation occurs on the Backend.
 - **Context**: Preventing client-side spoofing of valid tickets.
 - **Consequence**: Backend must share/know the signing secret used to generate the QR content.
